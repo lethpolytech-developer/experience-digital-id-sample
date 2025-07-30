@@ -1,0 +1,132 @@
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+button {
+    all: unset;
+}
+.page {
+    display: grid;
+    justify-items: center;
+    margin-bottom: 0.5rem;
+}
+.id-photo {
+    width: 8rem;
+    height: auto;
+    border-radius: 0.375rem;
+    margin-bottom: 1.5rem;
+}
+.lethpolytech-logo {
+    width: 12rem;
+    height: auto;
+    margin-left: -1rem;
+    margin-top: -0.9rem;
+    margin-bottom: -1.2rem;
+}
+.be-ready-logo {
+    width: 8rem;
+    height: auto;
+}
+.card-layout {
+    display: flex;
+    flex-direction: row;
+}
+.card-column {
+    position: relative;
+}
+.card-info {
+    padding-left: 1.5rem;
+}
+.label-text {
+    font-size: 0.9em;
+}
+.detail-text {
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+}
+.name-text {
+    font-size: 1.12em;
+    overflow-wrap: anywhere;
+}
+.verified-status {
+    color: black;
+    animation: shine 2s linear reverse infinite;
+    background: radial-gradient(circle farthest-corner, #b3ee4e, #ffffe0);
+    background-size: 200% auto;
+    border-radius: 1.5rem;
+    padding: 0.5rem;
+    font-size: 0.9em;
+}
+.unverified-status, .expired-status {
+    color: white;
+    animation: shine 2s linear reverse infinite;
+    background: radial-gradient(circle farthest-corner, #ff0000, #ff9f6f);
+    background-size: 200% auto;
+    border-radius: 1.5rem;
+    padding: 0.5rem;
+    font-size: 0.9em;
+}
+.checking-status {
+    color: black;
+    animation: shine 2s linear reverse infinite;
+    background: radial-gradient(circle farthest-corner, #ffd900, #ffffe0);
+    background-size: 200% auto;
+    border-radius: 1.5rem;
+    padding: 0.5rem;
+    font-size: 0.9em;
+}
+.barcode-container {
+    margin-top: 1rem;
+    margin-bottom: -0.5rem;
+}
+
+@media (orientation: portrait) {
+    .card-margin {
+        margin-top: 1rem;
+    }
+    .id-photo {
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        width: 9rem;
+    }
+    .card-layout {
+        flex-direction: column;
+    }
+    .card-info {
+        padding-left: 0;
+    }
+    .lethpolytech-logo {
+        width: 10rem;
+        height: auto;
+        margin-left: -0.8rem;
+        margin-top: -0.75rem;
+        margin-bottom: -1rem;
+    }
+    .be-ready-logo {
+        width: 7rem;
+        height: auto;
+    }
+    .label-text {
+        font-size: 0.8em;
+    }
+    .detail-text {
+        font-size: 0.8em;
+    }
+    .name-text {
+        font-size: 1.11em;
+    }
+    .verified-status, .checking-status, .unverified-status, .expired-status {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.4rem;
+        font-size: 0.8em;
+    }
+    .barcode-container {
+        margin-bottom: 1rem;
+    }
+    .name-row {
+        margin-bottom: 1rem;
+    }
+}

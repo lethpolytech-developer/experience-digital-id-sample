@@ -1,0 +1,56 @@
+{
+  "name": "person-details",
+  "parameters": [
+    {
+      "name": "ethosApiKey",
+      "type": "string",
+      "required": true,
+      "sensitive": true
+    },
+    {
+      "name": "testPersonId",
+      "type": "string",
+      "sensitive": true
+    }
+  ],
+  "apiDefinition": {
+    "authType": "userToken",
+    "httpVerb": "GET"
+  },
+  "pipeline": [
+    "Setup User",
+    "Get Person",
+    "JavaScript Transform"
+  ],
+  "segments": {
+    "Setup User": {
+      "class": "JavaScriptTransform",
+      "config": {
+        "pushUndefined": true,
+        "stopOnError": false,
+        "code": "function transform (message, context) {\n  const contextUser = context.get('__user');\n  const testPersonId = context.get('testPersonId');\n  \n  const personId = testPersonId || contextUser.id;\n  \n  context.set('personId', personId);\n  \n  return {\n    payload: {\n      personId\n    }\n  }\n}\n"
+      }
+    },
+    "Get Person": {
+      "class": "ethosProxyGet",
+      "config": {
+        "resource": "persons",
+        "acceptVersions": [
+          "12"
+        ],
+        "idFromPayload": "$.personId",
+        "target": "person",
+        "cache": false,
+        "ignoreErrors": false
+      }
+    },
+    "JavaScript Transform": {
+      "class": "JavaScriptTransform",
+      "config": {
+        "pushUndefined": true,
+        "stopOnError": false,
+        "code": "function transform (message, context) {\n  const { payload: { personId, person } = {} } = message;\n  \n  const colleaguePersonId = person.credentials.find(cred => cred.type === 'colleaguePersonId')?.value;\n  const favoredName = person.names.find(name => name.type.category === 'favored');\n  const legalName = person.names.find(name => name.type.category === 'legal');\n  const emailAddress = person.emails.find(email => email.preference === 'primary')?.address;\n  \n  let firstName;\n\n    if (favoredName) {\n      ({ firstName } = favoredName)\n    }\n    else {\n      ({ firstName } = legalName)\n    }\n  \n  return {\n      firstName: firstName,\n      lastName: legalName?.lastName,\n      id: colleaguePersonId,\n      email: emailAddress\n  }\n}\n"
+      }
+    }
+  }
+}
